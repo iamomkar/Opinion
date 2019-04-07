@@ -29,6 +29,10 @@ import com.creativeminds.opinion.retrofit.APIClient;
 import com.creativeminds.opinion.retrofit.APIInterface;
 import com.google.gson.Gson;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,9 +40,9 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView name,email;
+    TextView name, email;
     SharedPreferences sharedPreferences;
-    Button vote,createPoll,result,myPolls;
+    Button vote, createPoll, result, myPolls;
     APIInterface apiInterface;
     String message;
     int success;
@@ -51,7 +55,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences = getSharedPreferences(getPackageName(),MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View v = navigationView.getHeaderView(0);
@@ -61,8 +65,8 @@ public class MainActivity extends AppCompatActivity
         myPolls = (Button) findViewById(R.id.view_my_polls);
         vote = (Button) findViewById(R.id.vote);
         result = (Button) findViewById(R.id.view_results);
-        name.setText(sharedPreferences.getString("name","Name"));
-        email.setText(sharedPreferences.getString("email","Email"));
+        name.setText(sharedPreferences.getString("name", "Name"));
+        email.setText(sharedPreferences.getString("email", "Email"));
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -74,7 +78,7 @@ public class MainActivity extends AppCompatActivity
         createPoll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,CreatePollActivity.class));
+                startActivity(new Intent(MainActivity.this, CreatePollActivity.class));
             }
         });
 
@@ -84,7 +88,7 @@ public class MainActivity extends AppCompatActivity
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
                 alertDialogBuilder.setTitle("Select").setMessage("How would you like to vote").setPositiveButton("Scan QR Code", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivityForResult(new Intent(MainActivity.this, ScanQRActivity.class).putExtra("title","Scan Poll QR Code"),1);
+                        startActivityForResult(new Intent(MainActivity.this, ScanQRActivity.class).putExtra("title", "Scan Poll QR Code"), 1);
                     }
                 }).setNegativeButton("Enter Poll ID", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -94,11 +98,11 @@ public class MainActivity extends AppCompatActivity
                         alertDialogBuilder.setView(editText);
                         alertDialogBuilder.setTitle("Enter Poll ID").setPositiveButton("Validate", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                if(!editText.getText().toString().isEmpty()){
+                                if (!editText.getText().toString().isEmpty()) {
                                     getPollDetails(editText.getText().toString());
                                 }
                             }
-                        }).setNegativeButton("Cancel",null).show();
+                        }).setNegativeButton("Cancel", null).show();
                     }
                 }).show();
             }
@@ -107,10 +111,9 @@ public class MainActivity extends AppCompatActivity
         myPolls.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,PollsListActivity.class));
+                startActivity(new Intent(MainActivity.this, PollsListActivity.class));
             }
         });
-
 
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -159,7 +162,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -190,15 +193,17 @@ public class MainActivity extends AppCompatActivity
                     p.cancel();
                     if (success == 1) {
                         poll = response.body().getPoll();
-                        Intent intent = new Intent(MainActivity.this,VotingActivity.class);
-                        intent.putExtra("poll",gson.toJson(poll));
-                        startActivity(intent);
-                        Log.d("POLL", "onResponse: "+poll.toString());
-                    }
-                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        if (!isPollExpired() && hasPollStarted() && checkLocationSpecific()) {
+                            Intent intent = new Intent(MainActivity.this, VotingActivity.class);
+                            intent.putExtra("poll", gson.toJson(poll));
+                            startActivity(intent);
+                        }
+                        Log.d("POLL", "onResponse: " + poll.toString());
+                    } else
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                 } else {
                     p.cancel();
-                    Toast.makeText(getApplicationContext(), "Error Creating Poll\n\n"+response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Error Creating Poll\n\n" + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -220,11 +225,11 @@ public class MainActivity extends AppCompatActivity
                 String contents = data.getStringExtra("SCAN_RESULT");
                 Log.e("scan result", " " + contents);
                 try {
-                    poll = gson.fromJson(contents,Poll.class);
-                    Intent intent = new Intent(MainActivity.this,VotingActivity.class);
-                    intent.putExtra("poll",gson.toJson(poll));
+                    poll = gson.fromJson(contents, Poll.class);
+                    Intent intent = new Intent(MainActivity.this, VotingActivity.class);
+                    intent.putExtra("poll", gson.toJson(poll));
                     startActivity(intent);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(MainActivity.this, "Unsupported QR Code. Try Again.", Toast.LENGTH_SHORT).show();
                 }
@@ -236,5 +241,55 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+    }
+
+    public boolean isPollExpired() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        try {
+            Date endTime = sdf.parse(poll.getEndTime());
+            Date currentTimeDate = new Date();
+            //past = 1
+            //future = -1
+            if (currentTimeDate.compareTo(endTime) == -1) {
+                return false;
+            } else {
+                Toast.makeText(MainActivity.this, "Poll Voting Deadline Passed on " + endTime.toString(), Toast.LENGTH_LONG).show();
+                return true;
+            }
+
+        } catch (ParseException ignored) {
+            ignored.printStackTrace();
+        }
+        return true;
+    }
+
+    public boolean hasPollStarted() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        try {
+            Date startTime = sdf.parse(poll.getCreationDate());
+            Date currentTimeDate = new Date();
+            if (currentTimeDate.compareTo(startTime) == 1) {
+                return true;
+            } else {
+                Toast.makeText(MainActivity.this, "Voting not started yet. Voting will begin on " + startTime.toString(), Toast.LENGTH_LONG).show();
+                return false;
+            }
+        } catch (ParseException ignored) {
+            ignored.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean checkLocationSpecific(){
+        if(poll.getIsLocationSpecific().equals("true")){
+            if(poll.getLocation().equals(sharedPreferences.getString("state","null"))){
+                return true;
+            }else {
+                Toast.makeText(MainActivity.this, "Voting is Location Specific for "+poll.getLocation(), Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }else {
+            return true;
+        }
     }
 }

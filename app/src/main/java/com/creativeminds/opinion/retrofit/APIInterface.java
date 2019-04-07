@@ -1,6 +1,7 @@
 package com.creativeminds.opinion.retrofit;
 
 import com.creativeminds.opinion.models.CandidatesListResponse;
+import com.creativeminds.opinion.models.Poll;
 import com.creativeminds.opinion.models.PollDetailsResponse;
 import com.creativeminds.opinion.models.LoginResponse;
 import com.creativeminds.opinion.models.NormalResponse;
@@ -43,6 +44,10 @@ public interface APIInterface {
 
     @GET("add_vote.php")
     Call<NormalResponse> addVote(@Query("uid") String uid,@Query("pid") String pid,@Query("cid") String cid,@Query("gender") String gender,@Query("occupation") String occupation,@Query("state") String state,@Query("city") String city,@Query("pincode") String pincode,@Query("age") String age,@Query("latlong") String latlong);
+
+    @GET("get_poll_votes.php")
+    Call<CandidatesListResponse> getPollVotesList(@Query("pid") String pid);
+
 
 
 }

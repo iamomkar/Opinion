@@ -42,8 +42,10 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 import net.glxn.qrgen.android.QRCode;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -208,7 +210,6 @@ public class CreatePollActivity extends AppCompatActivity implements  Validator.
         if(cName.isEmpty() || cdob.isEmpty() || cLocation.isEmpty() || cOccupation.isEmpty() || cGender.isEmpty() || cPartyName.isEmpty()){
             Toast.makeText(getApplicationContext(), "Enter All Fields", Toast.LENGTH_SHORT).show();
         }else{
-            p = ProgressDialog.show(CreatePollActivity.this, "Adding Candidate", "Please wait...", true, false);
             addCandidate();
         }
     }
@@ -273,8 +274,9 @@ public class CreatePollActivity extends AppCompatActivity implements  Validator.
         }
         SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(),MODE_PRIVATE);
         created_by = sharedPreferences.getString("uid","0");
-        createNewPoll();
-        p = ProgressDialog.show(CreatePollActivity.this, "Creating Poll", "Please wait...", true, false);
+        if(checkIfDatesValid()){
+            createNewPoll();
+        }
     }
 
     @Override
@@ -293,6 +295,8 @@ public class CreatePollActivity extends AppCompatActivity implements  Validator.
     }
 
     public void createNewPoll() {
+        p = ProgressDialog.show(CreatePollActivity.this, "Creating Poll", "Please wait...", true, false);
+
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         Call<PollCreatedResponse> call = apiInterface.createNewPoll(created_by,title,description,startDate,endDate,"",isLocationSpecific,location,String.valueOf(i));
@@ -331,6 +335,8 @@ public class CreatePollActivity extends AppCompatActivity implements  Validator.
     }
 
     public void addCandidate() {
+        p = ProgressDialog.show(CreatePollActivity.this, "Adding Candidate", "Please wait...", true, false);
+
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         Call<NormalResponse> call = apiInterface.addCandidate(pollID,cName,cPartyName,String.valueOf(i),"",cGender,cOccupation,cdob,cLocation);
@@ -372,6 +378,8 @@ public class CreatePollActivity extends AppCompatActivity implements  Validator.
     }
 
     public void createVotesTable(String pid) {
+        p = ProgressDialog.show(CreatePollActivity.this, "Creating Votes Table", "Please wait...", true, false);
+
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         Call<NormalResponse> call = apiInterface.createVotesTable(pid);
@@ -407,6 +415,26 @@ public class CreatePollActivity extends AppCompatActivity implements  Validator.
                 Log.e("RegisterActivity", t.toString());
             }
         });
+    }
+
+    public boolean checkIfDatesValid() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        try {
+            Date endTime = sdf.parse(mEndDate.getText().toString());
+            Date startTime = sdf.parse(mStartDate.getText().toString());
+            //past = 1
+            //future = -1
+            if (startTime.compareTo(endTime) == -1) {
+                return true;
+            } else {
+                Toast.makeText(CreatePollActivity.this, "End date can't be behind start date.", Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+        } catch (ParseException ignored) {
+            ignored.printStackTrace();
+        }
+        return false;
     }
 
 }

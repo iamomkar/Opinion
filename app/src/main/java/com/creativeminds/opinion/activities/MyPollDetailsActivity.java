@@ -73,7 +73,7 @@ public class MyPollDetailsActivity extends AppCompatActivity {
         p = ProgressDialog.show(MyPollDetailsActivity.this, "Getting Poll Details", "Please wait...", true, false);
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        Call<CandidatesListResponse> call = apiInterface.getAllCandidatesOfPoll(pid);
+        Call<CandidatesListResponse> call = apiInterface.getPollVotesList(pid);
         call.enqueue(new Callback<CandidatesListResponse>() {
             @Override
             public void onResponse(Call<CandidatesListResponse> call, Response<CandidatesListResponse> response) {

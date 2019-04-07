@@ -13,8 +13,8 @@ if (isset($_GET['pid'])) {
     if ($conn) {
         $sql = "CREATE TABLE poll" . $pid . "_votes_tb ( vid INT NOT NULL AUTO_INCREMENT , user_id INT NOT NULL ,
                 candidate_id INT NOT NULL , gender VARCHAR(15) NOT NULL ,occupation VARCHAR(20) NOT NULL , 
-                state VARCHAR(25) NOT NULL , city VARCHAR(25) NOT NULL , pin_code VARCHAR(10) NOT NULL , 
-                age VARCHAR(5) NOT NULL , lat_long VARCHAR(50) NOT NULL , PRIMARY KEY (vid)) ENGINE = InnoDB";
+                state VARCHAR(25) NOT NULL , city VARCHAR(25) NOT NULL , pincode VARCHAR(10) NOT NULL , 
+                age VARCHAR(5) NOT NULL , latlong VARCHAR(50) NOT NULL , PRIMARY KEY (vid)) ENGINE = InnoDB";
 
         if (mysqli_query($conn, $sql)) {
 

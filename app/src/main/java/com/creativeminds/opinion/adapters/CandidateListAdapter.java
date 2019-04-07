@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.creativeminds.opinion.R;
 import com.creativeminds.opinion.activities.CandidateDetailsActivity;
@@ -58,11 +59,12 @@ public class CandidateListAdapter extends RecyclerView.Adapter<CandidateListAdap
         final Candidate candidate = candidateList.get(position);
         holder.name.setText(candidate.getName());
         holder.party.setText(candidate.getPartyName());
-        holder.vote.setVisibility(View.INVISIBLE);
+        //holder.vote.setVisibility(View.INVISIBLE);
+        holder.vote.setText(candidate.getVotes());
         holder.vote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Toast.makeText(mContext, "To be Implemented", Toast.LENGTH_SHORT).show();
             }
         });
         holder.candidateCard.setOnClickListener(new View.OnClickListener() {
