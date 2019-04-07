@@ -1,6 +1,7 @@
 package com.creativeminds.opinion.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.creativeminds.opinion.R;
+import com.creativeminds.opinion.activities.CandidateDetailsActivity;
+import com.creativeminds.opinion.activities.MyPollDetailsActivity;
 import com.creativeminds.opinion.models.Poll;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,13 +54,14 @@ public class PollListAdapter extends RecyclerView.Adapter<PollListAdapter.MyView
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        Poll poll = pollList.get(position);
+        final Poll poll = pollList.get(position);
         holder.title.setText(poll.getTitle());
         holder.description.setText(poll.getDescription());
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Gson gson = new Gson();
+                mContext.startActivity(new Intent(mContext, MyPollDetailsActivity.class).putExtra("poll",gson.toJson(poll)));
             }
         });
     }

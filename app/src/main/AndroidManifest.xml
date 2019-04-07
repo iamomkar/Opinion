@@ -15,11 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.VotingActivity"
-            android:label="Candidate Details"
+        <activity android:name=".activities.MyPollDetailsActivity"
+            android:label="Poll Details"
             android:theme="@style/RegisterBackground"/>
         <activity
+            android:name=".activities.CandidateDetailsActivity"
+            android:label="Candidate Details"
+            android:theme="@style/RegisterBackground" />
+        <activity
+            android:name=".activities.VotingActivity"
+            android:label="Poll Details"
+            android:theme="@style/RegisterBackground" />
+        <activity
             android:name=".activities.PollsListActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:label="My Polls"
             android:theme="@style/RegisterBackground" />
         <activity

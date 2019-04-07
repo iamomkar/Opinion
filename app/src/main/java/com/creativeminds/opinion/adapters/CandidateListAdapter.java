@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-public class VoteCandidateAdapter extends RecyclerView.Adapter<VoteCandidateAdapter.MyViewHolder> {
+public class CandidateListAdapter extends RecyclerView.Adapter<CandidateListAdapter.MyViewHolder> {
 
     private Context mContext;
     private List<Candidate> candidateList;
@@ -40,7 +40,7 @@ public class VoteCandidateAdapter extends RecyclerView.Adapter<VoteCandidateAdap
     }
 
 
-    public VoteCandidateAdapter(Context mContext, List<Candidate> candidates) {
+    public CandidateListAdapter(Context mContext, List<Candidate> candidates) {
         this.mContext = mContext;
         this.candidateList = candidates;
     }
@@ -48,7 +48,7 @@ public class VoteCandidateAdapter extends RecyclerView.Adapter<VoteCandidateAdap
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.vote_candidate_item, parent, false);
+                .inflate(R.layout.candidate_list_item, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -58,6 +58,7 @@ public class VoteCandidateAdapter extends RecyclerView.Adapter<VoteCandidateAdap
         final Candidate candidate = candidateList.get(position);
         holder.name.setText(candidate.getName());
         holder.party.setText(candidate.getPartyName());
+        holder.vote.setVisibility(View.INVISIBLE);
         holder.vote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
