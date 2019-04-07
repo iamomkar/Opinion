@@ -12,7 +12,7 @@ $response = array();
 
         if ($conn) {
 
-            $sql = "SELECT * FROM candidate_tb WHERE poll_id = '$pid' ORDER BY poll_position DESC";
+            $sql = "SELECT * FROM candidate_tb WHERE poll_id = '$pid' ORDER BY poll_position ASC";
             
         $result = mysqli_query($conn, $sql);
 

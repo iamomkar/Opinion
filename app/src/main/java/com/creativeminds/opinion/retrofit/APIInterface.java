@@ -26,6 +26,9 @@ public interface APIInterface {
     @GET("create_new_poll.php")
     Call<PollCreatedResponse> createNewPoll(@Query("created_by") String createdBy, @Query("title") String title,@Query("description") String description, @Query("creation_date") String creationDate,@Query("end_time") String endDate, @Query("photo_url") String photoURL,@Query("is_location_specific") String isLocationSpecific, @Query("location") String location,@Query("number_candidates")String numberOfCandidate);
 
+    @GET("create_votes_table.php")
+    Call<NormalResponse> createVotesTable(@Query("pid") String pid);
+
     @GET("add_new_candidate.php")
     Call<NormalResponse> addCandidate(@Query("poll_id") String pollID, @Query("name") String candidateName,@Query("party_name") String partyName, @Query("poll_position") String pollPosition,@Query("symbol_photo_url") String photoURL, @Query("gender") String gender,@Query("occupation") String occupation, @Query("dob") String dob,@Query("location")String location);
 
@@ -37,6 +40,9 @@ public interface APIInterface {
 
     @GET("get_all_candidates_of_poll.php")
     Call<CandidatesListResponse> getAllCandidatesOfPoll(@Query("pid") String pid);
+
+    @GET("add_vote.php")
+    Call<NormalResponse> addVote(@Query("uid") String uid,@Query("pid") String pid,@Query("cid") String cid,@Query("gender") String gender,@Query("occupation") String occupation,@Query("state") String state,@Query("city") String city,@Query("pincode") String pincode,@Query("age") String age,@Query("latlong") String latlong);
 
 
 }

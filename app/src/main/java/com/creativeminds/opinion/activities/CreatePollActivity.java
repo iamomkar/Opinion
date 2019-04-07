@@ -163,16 +163,10 @@ public class CreatePollActivity extends AppCompatActivity implements  Validator.
         mFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Bitmap myBitmap = QRCode.from(gson.toJson(poll)).withSize(700,700).bitmap();
-                ImageView myImage = new ImageView(CreatePollActivity.this);
-                myImage.setImageBitmap(myBitmap);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CreatePollActivity.this);
-                alertDialogBuilder.setView(myImage);
                 alertDialogBuilder.setTitle("Generate").setMessage("Finish adding "+String.valueOf(i-1)+" candidates for the poll?Generate QR code to share with voters to vote?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(CreatePollActivity.this,ShowPollQRActivity.class);
-                        intent.putExtra("pollid",pollID);
-                        startActivity(intent);
+                        createVotesTable(pollID);
                     }
                 }).setNegativeButton("Cancel", null);
                 alertDialogBuilder.show();
@@ -377,6 +371,42 @@ public class CreatePollActivity extends AppCompatActivity implements  Validator.
         });
     }
 
+    public void createVotesTable(String pid) {
+        apiInterface = APIClient.getClient().create(APIInterface.class);
 
+        Call<NormalResponse> call = apiInterface.createVotesTable(pid);
+        call.enqueue(new Callback<NormalResponse>() {
+            @Override
+            public void onResponse(Call<NormalResponse> call, Response<NormalResponse> response) {
+                Log.d("URL", call.request().url().toString());
+                if (response.isSuccessful()) {
+                    success = response.body().getSuccess();
+                    message = response.body().getMessage();
+                    p.cancel();
+                    if (success == 1) {
+                        Toast.makeText(CreatePollActivity.this, message, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(CreatePollActivity.this,ShowPollQRActivity.class);
+                        intent.putExtra("pollid",pollID);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        Toast.makeText(CreatePollActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    p.cancel();
+                    Toast.makeText(CreatePollActivity.this, "Error creating Votes Table\n\n"+response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NormalResponse> call, Throwable t) {
+                Log.d("URL", call.request().url().toString());
+                Toast.makeText(CreatePollActivity.this, "Error Creating Votes Table(Device Error)", Toast.LENGTH_SHORT).show();
+                p.cancel();
+                Log.e("RegisterActivity", t.toString());
+            }
+        });
+    }
 
 }
