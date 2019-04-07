@@ -1,0 +1,240 @@
+package com.creativeminds.opinion.activities;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.creativeminds.opinion.R;
+import com.creativeminds.opinion.models.Poll;
+import com.creativeminds.opinion.models.PollDetailsResponse;
+import com.creativeminds.opinion.retrofit.APIClient;
+import com.creativeminds.opinion.retrofit.APIInterface;
+import com.google.gson.Gson;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+
+    TextView name,email;
+    SharedPreferences sharedPreferences;
+    Button vote,createPoll,result,myPolls;
+    APIInterface apiInterface;
+    String message;
+    int success;
+    ProgressDialog p;
+    Poll poll;
+    Gson gson = new Gson();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        sharedPreferences = getSharedPreferences(getPackageName(),MODE_PRIVATE);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View v = navigationView.getHeaderView(0);
+        name = (TextView) v.findViewById(R.id.name);
+        email = (TextView) v.findViewById(R.id.email);
+        createPoll = (Button) findViewById(R.id.create_poll);
+        myPolls = (Button) findViewById(R.id.view_my_polls);
+        vote = (Button) findViewById(R.id.vote);
+        result = (Button) findViewById(R.id.view_results);
+        name.setText(sharedPreferences.getString("name","Name"));
+        email.setText(sharedPreferences.getString("email","Email"));
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        createPoll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,CreatePollActivity.class));
+            }
+        });
+
+        vote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                alertDialogBuilder.setTitle("Select").setMessage("How would you like to vote").setPositiveButton("Scan QR Code", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivityForResult(new Intent(MainActivity.this, ScanQRActivity.class).putExtra("title","Scan Poll QR Code"),1);
+                    }
+                }).setNegativeButton("Enter Poll ID", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                        final EditText editText = new EditText(MainActivity.this);
+                        editText.setHint("Poll ID");
+                        alertDialogBuilder.setView(editText);
+                        alertDialogBuilder.setTitle("Enter Poll ID").setPositiveButton("Validate", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                if(!editText.getText().toString().isEmpty()){
+                                    getPollDetails(editText.getText().toString());
+                                }
+                            }
+                        }).setNegativeButton("Cancel",null).show();
+                    }
+                }).show();
+            }
+        });
+
+        myPolls.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,PollsListActivity.class));
+            }
+        });
+
+
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public void getPollDetails(String pid) {
+        p = ProgressDialog.show(MainActivity.this, "Getting Poll Details", "Please wait...", true, false);
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+
+        Call<PollDetailsResponse> call = apiInterface.getPollDetails(pid);
+        call.enqueue(new Callback<PollDetailsResponse>() {
+            @Override
+            public void onResponse(Call<PollDetailsResponse> call, Response<PollDetailsResponse> response) {
+                Log.d("URL", call.request().url().toString());
+                if (response.isSuccessful()) {
+                    success = response.body().getSuccess();
+                    message = response.body().getMessage();
+                    p.cancel();
+                    if (success == 1) {
+                        poll = response.body().getPoll();
+                        Intent intent = new Intent(MainActivity.this,VotingActivity.class);
+                        intent.putExtra("poll",gson.toJson(poll));
+                        startActivity(intent);
+                        Log.d("POLL", "onResponse: "+poll.toString());
+                    }
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                } else {
+                    p.cancel();
+                    Toast.makeText(getApplicationContext(), "Error Creating Poll\n\n"+response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PollDetailsResponse> call, Throwable t) {
+                Log.d("URL", call.request().url().toString());
+                Toast.makeText(getApplicationContext(), "Error Creating Poll(Device Error)", Toast.LENGTH_SHORT).show();
+                p.cancel();
+                Log.e("RegisterActivity", t.toString());
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                String contents = data.getStringExtra("SCAN_RESULT");
+                Log.e("scan result", " " + contents);
+                try {
+                    poll = gson.fromJson(contents,Poll.class);
+                    Intent intent = new Intent(MainActivity.this,VotingActivity.class);
+                    intent.putExtra("poll",gson.toJson(poll));
+                    startActivity(intent);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(MainActivity.this, "Unsupported QR Code. Try Again.", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+            if (resultCode == RESULT_CANCELED) {
+                //handle cancel
+                Log.e("scan result", " cancle");
+            }
+        }
+
+    }
+}

@@ -1,0 +1,140 @@
+<resources>
+    <string name="app_name">Opinion</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="hint_email">Enter email address</string>
+    <string name="hint_name">Enter name</string>
+    <string name="hint_uidno">Enter unique ID No.(Aadhar)</string>
+    <string name="hint_Gender">Gender</string>
+    <string name="hint_occupation">Occupation</string>
+    <string name="hint_phone">Enter phone number</string>
+    <string name="hint_pincode">Enter pin code</string>
+    <string name="hint_city">City</string>
+    <string name="hint_state">State</string>
+    <string name="hint_sec_question">Choose security question</string>
+    <string name="hint_sec_answer">Enter answer</string>
+    <string name="hint_dob">Date of birth</string>
+    <string name="hint_password">Enter password</string>
+    <string name="hint_password_confirm">Confirm password</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_signup">Register</string>
+    <string name="text_signup">Register Now?</string>
+    <string name="text_signin">Login</string>
+    <string name="text_forgot_password">Forgot Password?</string>
+    <string name="text_autofill">Autofill</string>
+    <string name="hint_poll_title">Enter poll name</string>
+    <string name="hint_poll_description">Enter poll description</string>
+    <string name="hint_poll_creation_date">Select poll start date and time</string>
+    <string name="hint_poll_end_date">Select poll end date and time</string>
+    <string name="hint_poll_location_specific">Is poll location specific</string>
+    <string name="hint_poll_location">Select Location</string>
+    <string name="btn_create_poll">Create Poll</string>
+    <string name="hint_candidate_name">Enter candidate name</string>
+    <string name="hint_candidate_party_name">Enter party name</string>
+    <string name="hint_candidate_dob">Select date of birth</string>
+    <string name="hint_candidate_location">Enter location</string>
+    <string name="hint_candidate_occupation">Enter occupation</string>
+    <string name="hint_candidate_gender">Select gender</string>
+    <string name="btn_add_candidate">Add Candidate</string>
+
+
+    <string-array name="occupation">
+        <item>Engineer</item>
+        <item>Teacher</item>
+        <item>Pharmacist</item>
+        <item>Farmer</item>
+        <item>Student</item>
+        <item>Business</item>
+        <item>Actor</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="security_questions">
+        <item>What is your fathers middle name?</item>
+        <item>What was your first mobile number?</item>
+        <item>What is your pet\'s name?</item>
+        <item>What is your vheicle registration number?</item>
+        <item>What was your first school\'s name?</item>
+    </string-array>
+
+    <string-array name="maharashtra_states">
+        <item>Ahmednagar</item>
+        <item>Amravati</item>
+        <item>Akola</item>
+        <item>Aurangabad</item>
+        <item>Beed</item>
+        <item>Bhandara</item>
+        <item>Buldhana</item>
+        <item>Chandrapur</item>
+        <item>Dhule</item>
+        <item>Gadchiroli</item>
+        <item>Gondia</item>
+        <item>Hingoli</item>
+        <item>Jalgaon</item>
+        <item>Jalna</item>
+        <item>Kolhapur</item>
+        <item>Latur</item>
+        <item>Mumbai</item>
+        <item>Nagpur</item>
+        <item>Nanded</item>
+        <item>Nandurbar</item>
+        <item>Nashik</item>
+        <item>Osmanabad</item>
+        <item>Palghar</item>
+        <item>Parbhani</item>
+        <item>Pune</item>
+        <item>Raigad</item>
+        <item>Ratnagiri</item>
+        <item>Sangli</item>
+        <item>Satara</item>
+        <item>Sindhudurg</item>
+        <item>Solapur</item>
+        <item>Thane</item>
+        <item>Wardha</item>
+        <item>Washim</item>
+        <item>Yavatmal</item>
+    </string-array>
+
+    <string-array name="india_states">
+        <item>Andaman and Nicobar Islands</item>
+        <item>Andhra Pradesh</item>
+        <item>Arunachal Pradesh</item>
+        <item>Assam</item>
+        <item>Bihar</item>
+        <item>Chandigarh</item>
+        <item>Chhattisgarh</item>
+        <item>Dadra and Nagar Haveli</item>
+        <item>Daman and Diu</item>
+        <item>Delhi</item>
+        <item>Goa</item>
+        <item>Gujarat</item>
+        <item>Haryana</item>
+        <item>Himachal Pradesh</item>
+        <item>Jammu and Kashmir</item>
+        <item>Jharkhand</item>
+        <item>Karnataka</item>
+        <item>Kerala</item>
+        <item>Lakshadweep</item>
+        <item>Madhya Pradesh</item>
+        <item>Maharashtra</item>
+        <item>Manipur</item>
+        <item>Meghalaya</item>
+        <item>Mizoram</item>
+        <item>Nagaland</item>
+        <item>Orissa</item>
+        <item>Pondicherry</item>
+        <item>Punjab</item>
+        <item>Rajasthan</item>
+        <item>Sikkim</item>
+        <item>Tamil Nadu</item>
+        <item>Telangana</item>
+        <item>Tripura</item>
+        <item>Uttaranchal</item>
+        <item>Uttar Pradesh</item>
+        <item>West Bengal</item>
+    </string-array>
+</resources>
