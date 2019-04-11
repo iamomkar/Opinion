@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.NewSurveyActivity">
+
+    <LinearLayout
+        android:id="@+id/create_poll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="#33ffffff"
+            android:ems="10"
+            android:fontFamily="@font/josefin_regular"
+            android:hint="@string/hint_survey_question"
+            android:inputType="text"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <EditText
+            android:id="@+id/option_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#33ffffff"
+            android:ems="10"
+            android:fontFamily="@font/josefin_regular"
+            android:hint="@string/hint_survey_option_one"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:minLines="2"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <EditText
+            android:id="@+id/option_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#33ffffff"
+            android:ems="10"
+            android:fontFamily="@font/josefin_regular"
+            android:hint="@string/hint_survey_option_two"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:minLines="2"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <EditText
+            android:id="@+id/option_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#33ffffff"
+            android:ems="10"
+            android:fontFamily="@font/josefin_regular"
+            android:hint="@string/hint_survey_option_three"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:minLines="2"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+        <EditText
+            android:id="@+id/option_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#33ffffff"
+            android:ems="10"
+            android:fontFamily="@font/josefin_regular"
+            android:hint="@string/hint_survey_option_four"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:minLines="2"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+
+        <EditText
+            android:id="@+id/end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:backgroundTint="#33ffffff"
+            android:clickable="true"
+            android:editable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:fontFamily="@font/josefin_regular"
+            android:hint="@string/hint_poll_end_date"
+            android:inputType="datetime"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white" />
+
+
+        <Button
+            android:id="@+id/create_survey_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_background"
+            android:fontFamily="@font/josefin_bold"
+            android:padding="5dp"
+            android:text="@string/btn_new_survey"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

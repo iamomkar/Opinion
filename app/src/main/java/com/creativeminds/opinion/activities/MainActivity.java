@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
 
     TextView name, email;
     SharedPreferences sharedPreferences;
-    Button vote, createPoll, result, myPolls;
+    Button vote, createPoll, result, myPolls,mSurveys,mNewSurvey;
     APIInterface apiInterface;
     String message;
     int success;
@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity
         name = (TextView) v.findViewById(R.id.name);
         email = (TextView) v.findViewById(R.id.email);
         createPoll = (Button) findViewById(R.id.create_poll);
+        mSurveys = (Button) findViewById(R.id.survey_btn);
+        mNewSurvey = (Button) findViewById(R.id.create_survey_btn);
         myPolls = (Button) findViewById(R.id.view_my_polls);
         vote = (Button) findViewById(R.id.vote);
         result = (Button) findViewById(R.id.view_results);
@@ -79,6 +81,34 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, CreatePollActivity.class));
+            }
+        });
+
+        mNewSurvey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                final EditText editText = new EditText(MainActivity.this);
+                editText.setHint("(2-4)");
+                alertDialogBuilder.setView(editText);
+                alertDialogBuilder.setTitle("Enter number of options for survey question? (min=2 and max=4)").setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (editText.getText().toString().equals("2") || editText.getText().toString().equals("3") || editText.getText().toString().equals("4")) {
+                            startActivity(new Intent(MainActivity.this, NewSurveyActivity.class).putExtra("number",editText.getText().toString()));
+                        }else{
+                            Toast.makeText(MainActivity.this, "Enter proper number of options.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).setNegativeButton("Cancel", null).show();
+
+            }
+        });
+
+        mSurveys.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,SurveyActivity.class));
             }
         });
 

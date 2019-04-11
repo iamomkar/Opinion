@@ -15,7 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.VoteSuccessActivity"></activity>
+        <activity android:name=".activities.SurveyActivity"
+            android:theme="@style/RegisterBackground"
+            android:label="Surveys"/>
+        <activity
+            android:name=".activities.NewSurveyActivity"
+            android:label="New Survey"
+            android:theme="@style/RegisterBackground" />
+        <activity android:name=".activities.VoteSuccessActivity" />
         <activity
             android:name=".activities.MyPollDetailsActivity"
             android:label="Poll Details"

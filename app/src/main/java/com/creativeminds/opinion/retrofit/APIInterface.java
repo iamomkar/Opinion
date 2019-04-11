@@ -1,12 +1,12 @@
 package com.creativeminds.opinion.retrofit;
 
 import com.creativeminds.opinion.models.CandidatesListResponse;
-import com.creativeminds.opinion.models.Poll;
 import com.creativeminds.opinion.models.PollDetailsResponse;
 import com.creativeminds.opinion.models.LoginResponse;
 import com.creativeminds.opinion.models.NormalResponse;
 import com.creativeminds.opinion.models.PollCreatedResponse;
 import com.creativeminds.opinion.models.PollListResponse;
+import com.creativeminds.opinion.models.SurveyListResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -48,7 +48,14 @@ public interface APIInterface {
     @GET("get_poll_votes.php")
     Call<CandidatesListResponse> getPollVotesList(@Query("pid") String pid);
 
+    @GET("create_new_survey.php")
+    Call<NormalResponse> addNewSurvey(@Query("created_by") String createdBy,@Query("number_of_options") String number_of_options,@Query("question") String question,@Query("option_one") String option_one,@Query("option_two") String option_two,@Query("option_three") String option_three,@Query("option_four") String option_four,@Query("start_time") String start_time,@Query("end_time") String end_time);
 
+    @GET("add_survey_vote.php")
+    Call<NormalResponse> addSurveyVote(@Query("sid") String sid,@Query("vote") String vote);
+
+    @GET("get_all_surveys.php")
+    Call<SurveyListResponse> getAllSurveys();
 
 }
 

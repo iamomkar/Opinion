@@ -11,12 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.creativeminds.opinion.R;
-import com.creativeminds.opinion.activities.CandidateDetailsActivity;
 import com.creativeminds.opinion.activities.MyPollDetailsActivity;
 import com.creativeminds.opinion.models.Poll;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PollListAdapter extends RecyclerView.Adapter<PollListAdapter.MyViewHolder> {
@@ -47,7 +45,7 @@ public class PollListAdapter extends RecyclerView.Adapter<PollListAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.my_poll_item, parent, false);
+                .inflate(R.layout.item_my_poll_list, parent, false);
 
         return new MyViewHolder(itemView);
     }

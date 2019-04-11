@@ -18,13 +18,9 @@ import android.widget.Toast;
 
 import com.creativeminds.opinion.R;
 import com.creativeminds.opinion.activities.CandidateDetailsActivity;
-import com.creativeminds.opinion.activities.CreatePollActivity;
-import com.creativeminds.opinion.activities.ShowPollQRActivity;
 import com.creativeminds.opinion.activities.VoteSuccessActivity;
-import com.creativeminds.opinion.activities.VotingActivity;
 import com.creativeminds.opinion.models.Candidate;
 import com.creativeminds.opinion.models.NormalResponse;
-import com.creativeminds.opinion.models.Poll;
 import com.creativeminds.opinion.retrofit.APIClient;
 import com.creativeminds.opinion.retrofit.APIInterface;
 import com.google.gson.Gson;
@@ -68,7 +64,7 @@ public class VoteCandidateAdapter extends RecyclerView.Adapter<VoteCandidateAdap
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.vote_candidate_item, parent, false);
+                .inflate(R.layout.item_vote_candidate, parent, false);
 
         return new MyViewHolder(itemView);
     }

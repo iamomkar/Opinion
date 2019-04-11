@@ -27,11 +27,33 @@
             android:textSize="25sp" />
 
         <Button
+            android:id="@+id/survey_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="Surveys"
+            android:background="@drawable/button_background_light"
+            android:fontFamily="@font/josefin_bold"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
+
+        <Button
             android:id="@+id/create_poll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:text="Create Poll"
+            android:background="@drawable/button_background_light"
+            android:fontFamily="@font/josefin_bold"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/create_survey_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="New Survey"
             android:background="@drawable/button_background_light"
             android:fontFamily="@font/josefin_bold"
             android:textColor="@android:color/white"

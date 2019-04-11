@@ -52,8 +52,6 @@ $response = array();
                 }
                 if($found == 0)
                 $candidates["votes"] = "0";
-
-                
                 array_push($response["candidates"], $candidates);
             }
                 $response["success"] = 1;

@@ -4,12 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.PollsListActivity">
+    tools:context=".activities.SurveyActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/polls_recycler_view"
+        android:id="@+id/survey_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_my_poll_list" />
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        tools:listitem="@layout/item_survey_list" />
 
 </RelativeLayout>

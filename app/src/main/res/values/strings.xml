@@ -40,6 +40,12 @@
     <string name="hint_candidate_occupation">Enter occupation</string>
     <string name="hint_candidate_gender">Select gender</string>
     <string name="btn_add_candidate">Add Candidate</string>
+    <string name="hint_survey_question">Enter question</string>
+    <string name="hint_survey_option_one">Enter option one</string>
+    <string name="hint_survey_option_two">Enter option two</string>
+    <string name="hint_survey_option_three">Enter option three</string>
+    <string name="hint_survey_option_four">Enter option four</string>
+    <string name="btn_new_survey">Create Survey</string>
 
 
     <string-array name="occupation">
