@@ -1,6 +1,7 @@
 package com.creativeminds.opinion.activities;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -41,6 +42,9 @@ public class SurveyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        SharedPreferences sharedPreferences =getSharedPreferences(getPackageName(),MODE_PRIVATE);
         recyclerView = (RecyclerView) findViewById(R.id.survey_recycler_view);
 
         surveyListAdapter = new SurveyListAdapter(SurveyActivity.this, surveyList);
@@ -54,7 +58,7 @@ public class SurveyActivity extends AppCompatActivity {
     }
 
     public void getAllSurveys() {
-        p = ProgressDialog.show(SurveyActivity.this, "Getting Poll Details", "Please wait...", true, false);
+        p = ProgressDialog.show(SurveyActivity.this, "Getting Surveys", "Please wait...", true, false);
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         Call<SurveyListResponse> call = apiInterface.getAllSurveys();

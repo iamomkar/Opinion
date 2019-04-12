@@ -17,8 +17,8 @@ if (isset($_GET['created_by']) && isset($_GET['number_of_options'])) {
     $conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATABASE);
 
     if ($conn) {
-        $sql = "INSERT INTO survey_tb(created_by,question,option_one,option_two,option_three,option_four,start_time,end_time)
-                    VALUES ('$created_by','$question','$option_one','$option_two','$option_three','$option_four','$start_time','$end_time')";
+        $sql = "INSERT INTO survey_tb(created_by,number_of_options,question,option_one,option_two,option_three,option_four,start_time,end_time)
+                    VALUES ('$created_by','$number_of_options','$question','$option_one','$option_two','$option_three','$option_four','$start_time','$end_time')";
 
         if (mysqli_query($conn, $sql)) {
 

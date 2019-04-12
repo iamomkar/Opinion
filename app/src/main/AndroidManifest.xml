@@ -17,6 +17,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activities.SurveyActivity"
             android:theme="@style/RegisterBackground"
+            android:parentActivityName=".activities.MainActivity"
             android:label="Surveys"/>
         <activity
             android:name=".activities.NewSurveyActivity"

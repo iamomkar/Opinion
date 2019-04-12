@@ -46,6 +46,7 @@
     <string name="hint_survey_option_three">Enter option three</string>
     <string name="hint_survey_option_four">Enter option four</string>
     <string name="btn_new_survey">Create Survey</string>
+    <string name="percent_symbol">%</string>
 
 
     <string-array name="occupation">
