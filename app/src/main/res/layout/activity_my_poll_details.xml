@@ -45,7 +45,20 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/candidate_recycler_view"
         android:layout_below="@id/poll_desc"
+        android:layout_above="@id/poll_statistics_id"
         android:layout_marginTop="20dp" />
 
+    <Button
+        android:id="@+id/poll_statistics_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Poll Statistics"
+        android:background="@drawable/button_background_light"
+        android:fontFamily="@font/josefin_bold"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white"
+        android:textSize="25sp" />
 
 </RelativeLayout>

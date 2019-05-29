@@ -15,10 +15,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.SurveyActivity"
-            android:theme="@style/RegisterBackground"
+        <activity android:name=".activities.AgeWiseActivity"></activity>
+        <activity
+            android:name=".activities.PollStatisticsActivity"
+            android:label="Poll Statistics"
+            android:parentActivityName=".activities.MyPollDetailsActivity"
+            android:theme="@style/RegisterBackground" />
+        <activity
+            android:name=".activities.CandidateStatisticsActivity"
+            android:label="Candidate Statistics"
+            android:parentActivityName=".activities.MyPollDetailsActivity"
+            android:theme="@style/RegisterBackground" />
+        <activity
+            android:name=".activities.SurveyActivity"
+            android:label="Surveys"
             android:parentActivityName=".activities.MainActivity"
-            android:label="Surveys"/>
+            android:theme="@style/RegisterBackground" />
         <activity
             android:name=".activities.NewSurveyActivity"
             android:label="New Survey"

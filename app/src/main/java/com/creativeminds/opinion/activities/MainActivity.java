@@ -27,6 +27,7 @@ import com.creativeminds.opinion.models.Poll;
 import com.creativeminds.opinion.models.PollDetailsResponse;
 import com.creativeminds.opinion.retrofit.APIClient;
 import com.creativeminds.opinion.retrofit.APIInterface;
+import com.creativeminds.opinion.utils.AESEncyption;
 import com.google.gson.Gson;
 
 import java.text.ParseException;
@@ -283,7 +284,10 @@ public class MainActivity extends AppCompatActivity
             if (currentTimeDate.compareTo(endTime) == -1) {
                 return false;
             } else {
-                Toast.makeText(MainActivity.this, "Poll Voting Deadline Passed on " + endTime.toString(), Toast.LENGTH_LONG).show();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                alertDialogBuilder.setTitle("Deadline Passed").setMessage("Poll Voting Deadline Passed on " + endTime.toString())
+                        .setPositiveButton("OK", null).show();
+                //Toast.makeText(MainActivity.this, "Poll Voting Deadline Passed on " + endTime.toString(), Toast.LENGTH_LONG).show();
                 return true;
             }
 
@@ -301,7 +305,10 @@ public class MainActivity extends AppCompatActivity
             if (currentTimeDate.compareTo(startTime) == 1) {
                 return true;
             } else {
-                Toast.makeText(MainActivity.this, "Voting not started yet. Voting will begin on " + startTime.toString(), Toast.LENGTH_LONG).show();
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                alertDialogBuilder.setTitle("Not Started Yet").setMessage("Voting not started yet. Voting will begin on " + startTime.toString())
+                        .setPositiveButton("OK", null).show();
+                //Toast.makeText(MainActivity.this, "Voting not started yet. Voting will begin on " + startTime.toString(), Toast.LENGTH_LONG).show();
                 return false;
             }
         } catch (ParseException ignored) {
@@ -315,6 +322,9 @@ public class MainActivity extends AppCompatActivity
             if(poll.getLocation().equals(sharedPreferences.getString("state","null"))){
                 return true;
             }else {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                alertDialogBuilder.setTitle("Not Eligible").setMessage("Voting is Location Specific for " + poll.getLocation())
+                        .setPositiveButton("OK", null).show();
                 Toast.makeText(MainActivity.this, "Voting is Location Specific for "+poll.getLocation(), Toast.LENGTH_LONG).show();
                 return false;
             }
@@ -322,4 +332,5 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
     }
+
 }

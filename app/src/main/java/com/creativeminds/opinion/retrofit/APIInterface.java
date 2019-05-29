@@ -1,5 +1,6 @@
 package com.creativeminds.opinion.retrofit;
 
+import com.creativeminds.opinion.models.AgeDataResponse;
 import com.creativeminds.opinion.models.CandidatesListResponse;
 import com.creativeminds.opinion.models.PollDetailsResponse;
 import com.creativeminds.opinion.models.LoginResponse;
@@ -56,6 +57,12 @@ public interface APIInterface {
 
     @GET("get_all_surveys.php")
     Call<SurveyListResponse> getAllSurveys();
+
+    @GET("get_age_data_by_candidate.php")
+    Call<NormalResponse> getAgeDataByCandidate(@Query("pid") String pid,@Query("cid") String cid);
+
+    @GET("get_age_data_of_poll.php")
+    Call<AgeDataResponse> getAgeDataOfPoll(@Query("pid") String pid);
 
 }
 

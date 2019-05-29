@@ -1,6 +1,7 @@
 package com.creativeminds.opinion.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +38,7 @@ public class MyPollDetailsActivity extends AppCompatActivity {
     private CandidateListAdapter candidateListAdapter;
     private TextView mPollTitle;
     private TextView mPollDesc;
+    private Button statistics;
     APIInterface apiInterface;
     int success;
     String message;
@@ -42,6 +46,7 @@ public class MyPollDetailsActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     Poll poll;
     Gson gson = new Gson();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +59,7 @@ public class MyPollDetailsActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.candidate_recycler_view);
         mPollTitle = (TextView) findViewById(R.id.poll_title);
         mPollDesc = (TextView) findViewById(R.id.poll_desc);
+        statistics = (Button) findViewById(R.id.poll_statistics_id);
 
         mPollTitle.setText(poll.getTitle());
         mPollDesc.setText(poll.getDescription());
@@ -66,6 +72,13 @@ public class MyPollDetailsActivity extends AppCompatActivity {
         recyclerView.setAdapter(candidateListAdapter);
 
         getAllCandidatesOfPoll(poll.getPid());
+
+        statistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyPollDetailsActivity.this,PollStatisticsActivity.class).putExtra("pid",poll.getPid()));
+            }
+        });
 
     }
 

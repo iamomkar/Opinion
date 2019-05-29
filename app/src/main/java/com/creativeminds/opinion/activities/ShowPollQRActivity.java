@@ -19,6 +19,7 @@ import com.creativeminds.opinion.models.Poll;
 import com.creativeminds.opinion.models.PollDetailsResponse;
 import com.creativeminds.opinion.retrofit.APIClient;
 import com.creativeminds.opinion.retrofit.APIInterface;
+import com.creativeminds.opinion.utils.AESEncyption;
 import com.google.gson.Gson;
 
 import net.glxn.qrgen.android.QRCode;
@@ -41,6 +42,7 @@ public class ShowPollQRActivity extends AppCompatActivity {
     ImageView pollQRView;
     Button saveBtn,shareBtn;
     Bitmap myBitmap;
+    String encryptedQR;
     private static final Gson gson = new Gson();
 
     @Override
@@ -105,7 +107,14 @@ public class ShowPollQRActivity extends AppCompatActivity {
                     p.cancel();
                     if (success == 1) {
                         poll = response.body().getPoll();
-                         myBitmap = QRCode.from(gson.toJson(poll)).withSize(1000,1000).bitmap();
+                        try{
+                           encryptedQR =  AESEncyption.encrypt(gson.toJson(poll));
+                        }catch (Exception e){
+                            Toast.makeText(ShowPollQRActivity.this, "Error encryption", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
+                       //  myBitmap = QRCode.from(gson.toJson(poll)).withSize(1000,1000).bitmap();
+                        myBitmap = QRCode.from(encryptedQR).withSize(1000,1000).bitmap();
                         pollQRView.setImageBitmap(myBitmap);
                         Log.d("POLL", "onResponse: "+poll.toString());
                     }else {
