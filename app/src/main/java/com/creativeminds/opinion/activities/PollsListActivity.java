@@ -2,23 +2,20 @@ package com.creativeminds.opinion.activities;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.creativeminds.opinion.R;
 import com.creativeminds.opinion.adapters.PollListAdapter;
 import com.creativeminds.opinion.models.Poll;
-import com.creativeminds.opinion.models.PollDetailsResponse;
 import com.creativeminds.opinion.models.PollListResponse;
 import com.creativeminds.opinion.retrofit.APIClient;
 import com.creativeminds.opinion.retrofit.APIInterface;
-
-import net.glxn.qrgen.android.QRCode;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,7 +5,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.creativeminds.opinion.R;
 import com.creativeminds.opinion.models.NormalResponse;
-import com.creativeminds.opinion.models.PollCreatedResponse;
 import com.creativeminds.opinion.retrofit.APIClient;
 import com.creativeminds.opinion.retrofit.APIInterface;
 

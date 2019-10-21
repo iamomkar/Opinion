@@ -2,6 +2,9 @@ package com.creativeminds.opinion.retrofit;
 
 import com.creativeminds.opinion.models.AgeDataResponse;
 import com.creativeminds.opinion.models.CandidatesListResponse;
+import com.creativeminds.opinion.models.GenderDataResponse;
+import com.creativeminds.opinion.models.LocationDataResponse;
+import com.creativeminds.opinion.models.OccupationDataResponse;
 import com.creativeminds.opinion.models.PollDetailsResponse;
 import com.creativeminds.opinion.models.LoginResponse;
 import com.creativeminds.opinion.models.NormalResponse;
@@ -58,11 +61,22 @@ public interface APIInterface {
     @GET("get_all_surveys.php")
     Call<SurveyListResponse> getAllSurveys();
 
-    @GET("get_age_data_by_candidate.php")
-    Call<NormalResponse> getAgeDataByCandidate(@Query("pid") String pid,@Query("cid") String cid);
 
     @GET("get_age_data_of_poll.php")
     Call<AgeDataResponse> getAgeDataOfPoll(@Query("pid") String pid);
+
+    @GET("get_occupation_data_of_poll.php")
+    Call<OccupationDataResponse> getOccupationDataOfPoll(@Query("pid") String pid);
+
+    @GET("get_location_data_of_poll.php")
+    Call<LocationDataResponse> getLocationDataOfPoll(@Query("pid") String pid);
+
+    @GET("get_gender_data_of_poll.php")
+    Call<GenderDataResponse> getGenderDataOfPoll(@Query("pid") String pid);
+
+    @GET("get_age_data_by_candidate.php")
+    Call<AgeDataResponse> getAgeDataByCandidate(@Query("pid") String pid,@Query("cid") String cid);
+
 
 }
 

@@ -7,12 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +27,6 @@ import com.creativeminds.opinion.models.Poll;
 import com.creativeminds.opinion.models.PollDetailsResponse;
 import com.creativeminds.opinion.retrofit.APIClient;
 import com.creativeminds.opinion.retrofit.APIInterface;
-import com.creativeminds.opinion.utils.AESEncyption;
 import com.google.gson.Gson;
 
 import java.text.ParseException;
@@ -71,6 +70,8 @@ public class MainActivity extends AppCompatActivity
         name.setText(sharedPreferences.getString("name", "Name"));
         email.setText(sharedPreferences.getString("email", "Email"));
         setSupportActionBar(toolbar);
+
+        result.setVisibility(View.INVISIBLE);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -192,12 +193,11 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
 
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            alertDialogBuilder.setTitle("Developed by:-")
+                    .setMessage("Omkar Shinde\nMalhar Shinde\nGaurav Karmankar\nSwapnil Vaidha").show();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {

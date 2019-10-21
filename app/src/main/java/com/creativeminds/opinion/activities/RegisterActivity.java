@@ -7,7 +7,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -157,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity implements Validator.Val
         mAutoFill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(RegisterActivity.this, ScanQRActivity.class).putExtra("title","Scan Aadhaar Card "), 1);
+                startActivityForResult(new Intent(RegisterActivity.this, ScanAadharQRActivity.class).putExtra("title","Scan Aadhaar Card "), 1);
             }
         });
 

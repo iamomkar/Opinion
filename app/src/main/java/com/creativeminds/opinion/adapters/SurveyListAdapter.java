@@ -2,35 +2,23 @@ package com.creativeminds.opinion.adapters;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.creativeminds.opinion.R;
-import com.creativeminds.opinion.activities.MyPollDetailsActivity;
-import com.creativeminds.opinion.activities.SurveyActivity;
-import com.creativeminds.opinion.models.Candidate;
 import com.creativeminds.opinion.models.NormalResponse;
-import com.creativeminds.opinion.models.Poll;
 import com.creativeminds.opinion.models.Survey;
-import com.creativeminds.opinion.models.SurveyListResponse;
 import com.creativeminds.opinion.retrofit.APIClient;
 import com.creativeminds.opinion.retrofit.APIInterface;
-import com.google.gson.Gson;
 import com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

@@ -1,7 +1,7 @@
 package com.creativeminds.opinion.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -39,21 +39,26 @@ public class PollStatisticsActivity extends AppCompatActivity {
         mLocationWiseId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(PollStatisticsActivity.this,LocationStatisticsActivity.class);
+                intent.putExtra("pid",pid);
+                startActivity(intent);
             }
         });
 
         mGenderWiseId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
+                Intent intent = new Intent(PollStatisticsActivity.this,GenderStatisticsActivity.class);
+                intent.putExtra("pid",pid);
+                startActivity(intent);            }
         });
 
         mOccupationWiseId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(PollStatisticsActivity.this,OccupationActivity.class);
+                intent.putExtra("pid",pid);
+                startActivity(intent);
             }
         });
 

@@ -2,7 +2,7 @@ package com.creativeminds.opinion.activities;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -48,8 +48,13 @@ public class AgeWiseActivity extends AppCompatActivity {
         pieChart.setHoleColor(Color.WHITE);
         pieChart.animateY(1000, Easing.EaseInOutCubic);
 
-        getAllCandidatesOfPoll(getIntent().getStringExtra("pid"));
+        /*if(getIntent().getStringExtra("cid").equals(null)){
+            getAllCandidatesOfPoll(getIntent().getStringExtra("pid"));
+        }else {
+            getAllCandidatesOfPoll2(getIntent().getStringExtra("pid"),getIntent().getStringExtra("cid"));
+        }*/
 
+        getAllCandidatesOfPoll(getIntent().getStringExtra("pid"));
 
     }
 
@@ -58,6 +63,61 @@ public class AgeWiseActivity extends AppCompatActivity {
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         Call<AgeDataResponse> call = apiInterface.getAgeDataOfPoll(pid);
+        call.enqueue(new Callback<AgeDataResponse>() {
+            @Override
+            public void onResponse(Call<AgeDataResponse> call, Response<AgeDataResponse> response) {
+                Log.d("URL", call.request().url().toString());
+                if (response.isSuccessful()) {
+                    success = response.body().getSuccess();
+                    message = response.body().getMessage();
+                    p.cancel();
+                    if (success == 1) {
+                        String resp = response.body().toString();
+                        List<PieEntry> entries = new ArrayList<>();
+                        entries.add(new PieEntry(Integer.valueOf(response.body().getAgeBelow18()), "Below 18"));
+                        entries.add(new PieEntry(Integer.valueOf(response.body().getAge19To25()), "19 - 25"));
+                        entries.add(new PieEntry(Integer.valueOf(response.body().getAge26To50()), "26 - 50"));
+                        entries.add(new PieEntry(Integer.valueOf(response.body().getAgeAbove50()), "Above 50"));
+                        PieDataSet set = new PieDataSet(entries, "Age Statistics");
+                        set.setColors(ColorTemplate.COLORFUL_COLORS);
+                        set.setSliceSpace(3f);
+                        set.setSelectionShift(5f);
+                        PieData data = new PieData(set);
+                        data.setValueTextSize(10f);
+                        data.setValueTextColor(Color.YELLOW);
+                        pieChart.setData(data);
+                        Description description = new Description();
+                        description.setText("Age Wise Vote Statistics");
+                        pieChart.setDescription(description);
+                        pieChart.invalidate();
+                        Log.d("POLL", "onResponse: " + resp);
+                    } else {
+                        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                } else {
+                    p.cancel();
+                    Toast.makeText(getApplicationContext(), "Error getting Poll details\n\n" + response.message(), Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AgeDataResponse> call, Throwable t) {
+                Log.d("URL", call.request().url().toString());
+                Toast.makeText(getApplicationContext(), "Error Creating Poll(Device Error)", Toast.LENGTH_SHORT).show();
+                p.cancel();
+                Log.e("RegisterActivity", t.toString());
+                finish();
+            }
+        });
+    }
+
+    public void getAllCandidatesOfPoll2(String pid,String cid) {
+        p = ProgressDialog.show(AgeWiseActivity.this, "Getting Age Statistics", "Please wait...", true, false);
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+
+        Call<AgeDataResponse> call = apiInterface.getAgeDataByCandidate(pid,cid);
         call.enqueue(new Callback<AgeDataResponse>() {
             @Override
             public void onResponse(Call<AgeDataResponse> call, Response<AgeDataResponse> response) {

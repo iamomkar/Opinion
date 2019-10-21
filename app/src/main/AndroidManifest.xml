@@ -15,7 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.AgeWiseActivity"></activity>
+        <activity android:name=".activities.GenderStatisticsActivity"></activity>
+        <activity android:name=".activities.LocationStatisticsActivity" />
+        <activity android:name=".activities.ScanAadharQRActivity" />
+        <activity android:name=".activities.OccupationActivity" />
+        <activity android:name=".activities.AgeWiseActivity" />
         <activity
             android:name=".activities.PollStatisticsActivity"
             android:label="Poll Statistics"

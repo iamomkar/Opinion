@@ -2,18 +2,18 @@ package com.creativeminds.opinion.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.creativeminds.opinion.R;
 import com.creativeminds.opinion.activities.CandidateDetailsActivity;
+import com.creativeminds.opinion.activities.CandidateStatisticsActivity;
 import com.creativeminds.opinion.models.Candidate;
 import com.google.gson.Gson;
 
@@ -64,7 +64,7 @@ public class CandidateListAdapter extends RecyclerView.Adapter<CandidateListAdap
         holder.vote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "To be Implemented", Toast.LENGTH_SHORT).show();
+                mContext.startActivity(new Intent(mContext, CandidateStatisticsActivity.class).putExtra("pid",candidate.getPollId()).putExtra("cid",candidate.getCid()));
             }
         });
         holder.candidateCard.setOnClickListener(new View.OnClickListener() {

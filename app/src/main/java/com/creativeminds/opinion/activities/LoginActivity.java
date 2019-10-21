@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -69,9 +69,9 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                finish();
-                //validator.validate();
+                //startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                //finish();
+                validator.validate();
                 // TODO: 06-04-2019 add validator while building release build
             }
         });

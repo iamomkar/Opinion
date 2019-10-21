@@ -1,12 +1,14 @@
 package com.creativeminds.opinion.adapters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +80,16 @@ public class VoteCandidateAdapter extends RecyclerView.Adapter<VoteCandidateAdap
         holder.vote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addVote(candidateList.get(i).getCid(),candidateList.get(i).getPollId());
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
+                alertDialogBuilder.setTitle("Confirm?").setMessage("Are you sure you want to vote to "+candidate.getName()+"?").setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        addVote(candidateList.get(i).getCid(),candidateList.get(i).getPollId());
+                    }
+                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
+
             }
         });
         holder.candidateCard.setOnClickListener(new View.OnClickListener() {
